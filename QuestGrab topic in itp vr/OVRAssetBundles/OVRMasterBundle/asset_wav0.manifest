@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2610913681
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 26e9628c8a9163652dae935828eb1155
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 26e9628c8a9163652dae935828eb1155
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VRTemplateAssets/Audio/Button_14_hover.wav
+- Assets/VRTemplateAssets/Audio/Button_22_click.wav
+Dependencies: []

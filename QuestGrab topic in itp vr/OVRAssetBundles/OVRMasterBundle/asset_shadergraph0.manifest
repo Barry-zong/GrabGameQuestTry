@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 3952804766
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e52c278ae7106c2da1273444b4eb1dcc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5e762ccb57c4caaabbb5a4199ac82c23
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: e52c278ae7106c2da1273444b4eb1dcc
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Shaders/Interactable.shadergraph
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Shaders/Unlit_Fresnel.shadergraph
+- Packages/com.unity.render-pipelines.universal/Runtime/Materials/ArnoldStandardSurface/ArnoldStandardSurface.shadergraph
+Dependencies: []

@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2696042961
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2abd2106ade3c33048af802ff4b251e5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f4d58da2e394c3ac790f4c422276af4f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 2abd2106ade3c33048af802ff4b251e5
+HashAppended: 0
+ClassTypes:
+- Class: 134
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VRTemplateAssets/Materials/Primitive/Interactables.physicMaterial
+Dependencies: []

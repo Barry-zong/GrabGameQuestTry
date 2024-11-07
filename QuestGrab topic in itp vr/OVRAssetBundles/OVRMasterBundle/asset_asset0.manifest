@@ -1,0 +1,81 @@
+ManifestFileVersion: 0
+CRC: 1964778641
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f18bf4724d4bbf68513fee623efcd412
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 64576236b5ef47f6cc57d2cc38d14271
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: f18bf4724d4bbf68513fee623efcd412
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: b5d80f45fb5f4418a5e84a476e517628, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6af57311f7c9446fae8acabfbbfdb412, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0ed265b7dcce480f872660373d393d95, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b53eb82258e249bb97cf3789c6a97dda, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.BoolParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedFloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedIntParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ColorParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.FloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.MinFloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.TextureParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DownscaleParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.HDRACESPresetParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.NeutralRangeReductionModeParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.TonemappingModeParameter
+- AssemblyName: Unity.XR.CoreUtils
+  ClassName: Unity.XR.CoreUtils.Datums.AnimationCurveDatumProperty
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.AffordanceThemeData`1[System.Single]
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.AffordanceThemeData`1[UnityEngine.Color]
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.Audio.AudioAffordanceTheme
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.Audio.AudioAffordanceThemeData
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.Primitives.ColorAffordanceTheme
+- AssemblyName: Unity.XR.Interaction.Toolkit
+  ClassName: UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Theme.Primitives.FloatAffordanceTheme
+Assets:
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/AffordanceThemes/HighlightInteractionColorAffordanceTheme.asset
+- Assets/VRTemplateAssets/Themes/AudioAffordanceTheme.asset
+- Assets/VRTemplateAssets/Graphics/Post Process Volume Profile.asset
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Filters/AnyGazedAtTeleportAnchorFilter.asset
+- Assets/VRTemplateAssets/Themes/EdgeColorAffordanceTheme.asset
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/AffordanceThemes/HighlightStrengthInteractionAffordanceTheme.asset
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/AffordanceThemes/PokeSphereColorAffordanceTheme.asset
+Dependencies:
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_wav0

@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 768374728
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2e9d107b5b74dbff224eb6acf842039f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a4b57b1a56d6b76d200651994ae0863
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 2e9d107b5b74dbff224eb6acf842039f
+HashAppended: 0
+ClassTypes:
+- Class: 850595691
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VRTemplateAssets/Graphics/Template Lighting Settings.lighting
+Dependencies: []

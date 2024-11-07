@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+CRC: 3984337681
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 19af72471c5fb2a6e6c8ff013957e521
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 50e17d5f004e82b7642af61027606d59
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 19af72471c5fb2a6e6c8ff013957e521
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VRTemplateAssets/Models/Primitives/Torus.fbx
+- Assets/VRTemplateAssets/Models/Primitives/Cube.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Tunneling Vignette/TunnelingVignetteHemisphere.fbx
+- Assets/VRTemplateAssets/Models/Primitives/Tapered Cylinder.fbx
+- Assets/VRTemplateAssets/Models/Environment/Template Environment.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Models/BlinkVisual.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Models/UniversalController.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Models/Pinch_Pointer_LOD0.fbx
+- Assets/VRTemplateAssets/Models/Primitives/Cylinder.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/DemoSceneAssets/Models/Primitive_Blaster.fbx
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Models/Reticle_Torus.fbx
+Dependencies:
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_mat0
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_shader0
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_shadergraph0

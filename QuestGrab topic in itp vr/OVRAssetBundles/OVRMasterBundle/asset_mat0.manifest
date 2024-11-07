@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 433995573
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c3dd94edab3c31d9a2d6815ea95e3950
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 88f4053155d2c8e8bdeb16c00867b658
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: c3dd94edab3c31d9a2d6815ea95e3950
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/Flat Blue.mat
+- Assets/VRTemplateAssets/Materials/Environment/Concrete Grey.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/FresnelHighlight.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/Controller_Grey.mat
+- Assets/VRTemplateAssets/Materials/Environment/Concrete Blue.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/UI-NoZTest.mat
+- Assets/VRTemplateAssets/Materials/UI/BezierLink.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Tunneling Vignette/TunnelingVignette.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/Controller_White.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/Interactable.mat
+- Assets/VRTemplateAssets/Materials/Skybox/skybox01_openGL.mat
+- Assets/VRTemplateAssets/Materials/Controller/Blue.mat
+- Assets/VRTemplateAssets/Materials/Environment/Grid Dark Large.mat
+- Assets/VRTemplateAssets/Materials/Environment/Grid Dark Tight.mat
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Materials/Telport Anchor.mat
+- Packages/com.unity.render-pipelines.universal/Runtime/Materials/Lit.mat
+- Assets/VRTemplateAssets/Materials/Particles/ConfettiParticles.mat
+Dependencies:
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_png0
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_shader0
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_shadergraph0
+- D:/Unity/unityprojects/topic in itp vr/OVRAssetBundles/OVRMasterBundle/asset_tif0

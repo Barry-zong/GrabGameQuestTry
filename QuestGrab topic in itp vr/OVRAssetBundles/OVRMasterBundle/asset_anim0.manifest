@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 792335165
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7ce68b174ffb4c398d108c008ff4d3f8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 958b54fb77cc0a35b3bf79f07d0e96ea
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 7ce68b174ffb4c398d108c008ff4d3f8
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Samples/XR Interaction Toolkit/3.0.3/Starter Assets/Animations/ArrowBounce.anim
+Dependencies: []

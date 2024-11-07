@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 0659cb95fc8873b45aeeb6576bf3e300
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - startComDataScriptObject: {fileID: 11400000, guid: b538ea688cfc34e4782c8aaaafdfee7b,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
