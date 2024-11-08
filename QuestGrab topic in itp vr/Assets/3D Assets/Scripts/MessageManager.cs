@@ -7,7 +7,7 @@ public class MessageManager : MonoBehaviour
 {
     [SerializeField]
     StartComDataScriptObject startComDataScriptObject;
-
+   // fingerDetectMeta handData = FindObjectOfType<fingerDetectMeta>();
    // private SerialController serialController;
     public bool whetherLeftHand = false;
     public float Degree_Thumb;
@@ -57,30 +57,31 @@ public class MessageManager : MonoBehaviour
     // Executed each frame
     void Update()
     {
-       // string message = serialController.ReadSerialMessage();
-      /*  if (message == null)
-            return;
+        // string message = serialController.ReadSerialMessage();
+        /*  if (message == null)
+              return;
 
-      //  Debug.Log(message);
-      */
+        //  Debug.Log(message);
+        */
 
 
         // Check if the message is plain data or a connect/disconnect event.
-       // if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
-       //     Debug.Log("Connection established");
-      //  else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
-     //       Debug.Log("Connection attempt failed or disconnection detected");
+        // if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
+        //     Debug.Log("Connection established");
+        //  else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
+        //       Debug.Log("Connection attempt failed or disconnection detected");
         //else
         //{
-            // string[] m = message.Split(",");
-           
-            Degree_Thumb = 1;
-            Degree_Index = 2;
-            Degree_Middle = 3;
-            Degree_Ring = 4;
-            Degree_Pinky = 5;
-            // other input
-            if (whetherNewVersion)
+        // string[] m = message.Split(",");
+        
+
+        Degree_Thumb = 1;
+            Degree_Index = 1;
+        Degree_Middle = 1;
+        Degree_Ring = 1;
+        Degree_Pinky = 1;
+        // other input
+        if (whetherNewVersion)
             {
                 
                 Accel_x = 1;

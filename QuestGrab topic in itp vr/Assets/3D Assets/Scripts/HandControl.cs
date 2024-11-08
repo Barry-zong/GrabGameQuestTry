@@ -23,13 +23,15 @@ public class HandControl : MonoBehaviour
     public float FingerDegreeAll ;
     public AudioSource grabAudio ;
     MessageManager messageManager;
+    fingerDetectMeta fingerDetectMetaa;
     public bool ActiveDynamicState = false ;
 
     float oriY;
 
     void Start()
-    {  
-        messageManager=GetComponent<MessageManager>(); 
+    {
+        fingerDetectMetaa = GetComponent<fingerDetectMeta>();
+        messageManager =GetComponent<MessageManager>(); 
         FingerDegreeAll = 0;
         oriY=transform.position.y;
     }
@@ -52,11 +54,13 @@ public class HandControl : MonoBehaviour
     { FingerAct();  }
     void FuZhi ()
     {
-         float qd    = messageManager.Degree_Thumb;
+         float qd    = fingerDetectMetaa.fingerBendValues[5];
+        
          float wd = qd / adjustValue;
-         float ed = Mathf.Round(wd);
-         float rd = ed * adjustValue;
-         if(rd < 0||rd>100)
+         float ed = wd*300;
+         float rd = ed ;
+        Debug.Log(rd);
+        if (rd < 0||rd>100)
         {
             if(rd > 130)
             {
@@ -69,10 +73,10 @@ public class HandControl : MonoBehaviour
             }
         }
         fingerDa = rd ;
-        float qs   = messageManager.Degree_Index ;
+        float qs   = fingerDetectMetaa.fingerBendValues[6];
         float ws = qs / adjustValue;
-        float es = Mathf.Round(ws);
-        float rs = es * adjustValue;
+        float es = ws*300;
+        float rs = es ;
         if (rs < 0 || rs > 100)
         {
             if (rs > 100)
@@ -86,10 +90,10 @@ public class HandControl : MonoBehaviour
             }
         }
         fingerShi = rs ;
-        float qz    = messageManager.Degree_Middle ;
+        float qz    = fingerDetectMetaa.fingerBendValues[7];
         float wz = qz / adjustValue;
-        float ez = Mathf.Round(wz);
-        float rz = ez * adjustValue;
+        float ez = wz * 300;
+        float rz = ez;
         if (rz < 0 || rz > 100)
         {
             if (rz > 100)
@@ -103,10 +107,10 @@ public class HandControl : MonoBehaviour
             }
         }
         fingerZhon = rz ;
-        float qw   = messageManager.Degree_Ring ;
+        float qw   = fingerDetectMetaa.fingerBendValues[8];
         float ww = qw / adjustValue;
-        float ew = Mathf.Round(ww);
-        float rw = ew * adjustValue;
+        float ew = ww * 300;
+        float rw = ew;
         if (rw < 0 || rw > 100)
         {
             if (rw > 100)
@@ -120,10 +124,10 @@ public class HandControl : MonoBehaviour
             }
         }
         fingerWu = rw ;
-        float qx    = messageManager.Degree_Pinky ;
+        float qx    = fingerDetectMetaa.fingerBendValues[9];
         float wx = qx / adjustValue;
-        float ex = Mathf.Round(wx);
-        float rx = ex * adjustValue;
+        float ex = wx * 300;
+        float rx = ex ;
         if (rx < 0 || rx > 100)
         {
             if (rx > 100)
