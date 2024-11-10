@@ -8,13 +8,20 @@ public class HandBoardCounter : MonoBehaviour
 {
     private int score = 0;
     public Text YourScore;
-    public TextMeshProUGUI endScore;
+   // public TextMeshProUGUI endScore;
     public bool touchBoard = false ;
+    //public AudioClip win;
+    private AudioSource winSource;
+
+    private void Start()
+    {
+        winSource = GetComponent<AudioSource>();
+    }
 
     private void Update() {
         if(touchBoard)
         {
-            Invoke("invokeObject",0.5f);
+          //  Invoke("invokeObject",0.5f);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -25,8 +32,10 @@ public class HandBoardCounter : MonoBehaviour
             touchBoard = true ;
              score += 1;
             YourScore.text = score.ToString();
-            endScore.text = score.ToString();
-           
+          //  endScore.text = score.ToString();
+            winSource.Play();
+            Debug.Log("audioShouldPlay");
+
         }
     }
     
