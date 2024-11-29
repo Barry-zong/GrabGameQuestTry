@@ -28,6 +28,8 @@ public class HandControl : MonoBehaviour
 
     float oriY;
 
+    public FingerValueDetectRight fingerCalculatorRight;
+
     void Start()
     {
         fingerDetectMetaa = GetComponent<fingerDetectMeta>();
@@ -54,6 +56,7 @@ public class HandControl : MonoBehaviour
     { FingerAct();  }
     void FuZhi ()
     {
+        /*
          float qd    = fingerDetectMetaa.fingerBendValues[5];
         
          float wd = qd / adjustValue;
@@ -141,6 +144,18 @@ public class HandControl : MonoBehaviour
             }
         }
         fingerXiao = rx ;
+        */
+        fingerDa = fingerCalculatorRight.GetFingerBend(0);
+        if(fingerDa > 100) { fingerDa = 100; }
+        fingerShi = fingerCalculatorRight.GetFingerBend(1);
+        if(fingerShi > 100) { fingerShi = 100; }
+        fingerZhon = fingerCalculatorRight.GetFingerBend(2);
+        if(fingerZhon > 100) { fingerZhon = 100; }
+        fingerWu = fingerCalculatorRight.GetFingerBend(3);
+        if(fingerWu > 100) { fingerWu= 100; }
+        fingerXiao = fingerCalculatorRight.GetFingerBend(4);
+        if(fingerXiao > 100) { fingerXiao= 100; }
+
     }
     void FingerAct()
     {

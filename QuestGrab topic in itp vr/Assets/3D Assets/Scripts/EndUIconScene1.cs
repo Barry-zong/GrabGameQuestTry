@@ -7,14 +7,14 @@ public class EndUIconScene1 : MonoBehaviour
     public GameObject open1,close1;
     private Collider endcd;
     public GameObject scene;
-    
+    public bool levelEnding = false;
    
    
 
     private void Start()
     {
-        
-        endcd=GetComponent<Collider>();      
+        levelEnding = false;
+        endcd =GetComponent<Collider>();      
     }
 
     
@@ -23,6 +23,7 @@ public class EndUIconScene1 : MonoBehaviour
         
         open1.SetActive(true);
         close1.SetActive(false);
+        levelEnding = true;
        // scene.SetActive(false);
         scene.GetComponent<SceneMove>().movingSpeed = 0f;
     }
