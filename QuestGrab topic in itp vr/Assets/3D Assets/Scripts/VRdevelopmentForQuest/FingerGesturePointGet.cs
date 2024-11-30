@@ -20,6 +20,7 @@ public class HandGestureManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+      
     }
 
     void Update()

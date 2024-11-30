@@ -44,7 +44,7 @@ public class SceneMove : MonoBehaviour
             // 拇指和食指弯曲度大于0.7（表示捏合）
             // 其他手指弯曲度小于0.3（表示伸展）
          //   Debug.Log("Fingers: " + thumbBend + ", " + indexBend + ", " + middleBend + ", " + ringBend + ", " + pinkyBend);
-            isOKGesture = (thumbBend > 0.6f && indexBend > 0.6f) &&
+            isOKGesture = (thumbBend > 0.2f && indexBend > 0.6f) &&
                           (middleBend > 0.6f && ringBend > 0.6f && pinkyBend > 0.6f);
             // 根据手势状态更新计数器
             if (isOKGesture )
