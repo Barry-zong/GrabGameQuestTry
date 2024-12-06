@@ -66,6 +66,7 @@ public class SceneMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         okSpeedUp();
         if (isStart)
         {
@@ -100,4 +101,6 @@ public class SceneMove : MonoBehaviour
             SceneManager.LoadScene(currentScene.buildIndex);
         }
     }
+
+   
 }
