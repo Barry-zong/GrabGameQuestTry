@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ContrilShader : MonoBehaviour
 {
+    public bool WhthereExploded = false;
     public float dissolveSpeed = 2f;
     private List<DissolveEffect> dissolveEffects = new List<DissolveEffect>();
     private bool isDissolving = false; // 添加标志位防止重复触发
-
+   
     void Start()
     {
+        
         MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer renderer in renderers)
         {
@@ -28,6 +30,12 @@ public class ContrilShader : MonoBehaviour
     {
         if (other.CompareTag("HandDetect") && !isDissolving)
         {
+            if(WhthereExploded)
+            {
+                  ExpoldedEffect exploder = GetComponent<ExpoldedEffect>();
+                  exploder.TriggerEffect();
+            }
+
             isDissolving = true; // 设置标志位
             foreach (var dissolve in dissolveEffects)
             {

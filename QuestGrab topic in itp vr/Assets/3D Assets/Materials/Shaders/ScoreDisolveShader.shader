@@ -9,8 +9,8 @@ Shader "Lit/ScoreDisolveShader"
         _DissolveThreshold ("Dissolve Threshold", Range(0, 1)) = 0
         _DissolveEdgeWidth ("Edge Width", Range(0, 1)) = 0.1
         _DissolveEdgeColor ("Edge Color", Color) = (1, 0, 0, 1)
-        [HDR]_EdgeEmissionColor("Edge Emission Color", Color) = (1, 1, 1, 1)  // 新增：边缘发光颜色
-        _EdgeEmissionPower("Edge Emission Power", Range(1, 10)) = 2           // 新增：发光强度
+        [HDR]_EdgeEmissionColor("Edge Emission Color", Color) = (1, 1, 1, 1)
+        _EdgeEmissionPower("Edge Emission Power", Range(1, 10)) = 2
         _Smoothness ("Smoothness", Range(0, 1)) = 0.5
         _Metallic ("Metallic", Range(0, 1)) = 0
         _RoughnessIntensity ("Roughness Intensity", Range(0, 1)) = 1
@@ -20,7 +20,11 @@ Shader "Lit/ScoreDisolveShader"
     
     SubShader
     {
-        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
+        Tags { 
+            "RenderType"="Opaque" 
+            "RenderPipeline"="UniversalPipeline"
+            "IgnoreProjector"="True"
+        }
         
         Pass
         {
@@ -30,6 +34,13 @@ Shader "Lit/ScoreDisolveShader"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            
+            // VR支持
+            #pragma multi_compile_instancing
+            #pragma multi_compile _ DOTS_INSTANCING_ON
+            #pragma multi_compile _ STEREO_INSTANCING_ON
+            #pragma multi_compile _ UNITY_SINGLE_PASS_STEREO STEREO_MULTIVIEW_ON
+            
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
@@ -41,7 +52,6 @@ Shader "Lit/ScoreDisolveShader"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
             
-            // 结构体定义保持不变...
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -49,6 +59,7 @@ Shader "Lit/ScoreDisolveShader"
                 float2 lightmapUV : TEXCOORD1;
                 float3 normalOS : NORMAL;
                 float4 tangentOS : TANGENT;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
             
             struct Varyings
@@ -60,6 +71,8 @@ Shader "Lit/ScoreDisolveShader"
                 float3 normalWS : TEXCOORD3;
                 float4 shadowCoord : TEXCOORD4;
                 float fogCoord : TEXCOORD5;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
             };
             
             TEXTURE2D(_BaseMap);
@@ -75,8 +88,8 @@ Shader "Lit/ScoreDisolveShader"
                 float _DissolveThreshold;
                 float _DissolveEdgeWidth;
                 float4 _DissolveEdgeColor;
-                float4 _EdgeEmissionColor;     // 新增：边缘发光颜色
-                float _EdgeEmissionPower;      // 新增：发光强度
+                float4 _EdgeEmissionColor;
+                float _EdgeEmissionPower;
                 float _Smoothness;
                 float _Metallic;
                 float _RoughnessIntensity;
@@ -84,49 +97,53 @@ Shader "Lit/ScoreDisolveShader"
                 float _SpecularIntensity;
             CBUFFER_END
             
-            // vert函数保持不变...
-            Varyings vert(Attributes IN)
+            Varyings vert(Attributes input)
             {
-                Varyings OUT;
+                Varyings output = (Varyings)0;
                 
-                VertexPositionInputs vertexInput = GetVertexPositionInputs(IN.positionOS.xyz);
-                VertexNormalInputs normalInput = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_TRANSFER_INSTANCE_ID(input, output);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
                 
-                OUT.positionCS = vertexInput.positionCS;
-                OUT.positionWS = vertexInput.positionWS;
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-                OUT.normalWS = normalInput.normalWS;
-                OUT.shadowCoord = GetShadowCoord(vertexInput);
-                OUT.fogCoord = ComputeFogFactor(vertexInput.positionCS.z);
+                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+                VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
+                
+                output.positionCS = vertexInput.positionCS;
+                output.positionWS = vertexInput.positionWS;
+                output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
+                output.normalWS = normalInput.normalWS;
+                output.shadowCoord = GetShadowCoord(vertexInput);
+                output.fogCoord = ComputeFogFactor(vertexInput.positionCS.z);
                 
                 #ifdef LIGHTMAP_ON
-                    OUT.lightmapUV = IN.lightmapUV.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+                    output.lightmapUV = input.lightmapUV.xy * unity_LightmapST.xy + unity_LightmapST.zw;
                 #else
-                    OUT.lightmapUV = float2(0, 0);
+                    output.lightmapUV = float2(0, 0);
                 #endif
                 
-                return OUT;
+                return output;
             }
             
-            half4 frag(Varyings IN) : SV_Target
+            half4 frag(Varyings input) : SV_Target
             {
-                half4 baseColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
-                half noise = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, IN.uv).r;
-                half roughness = SAMPLE_TEXTURE2D(_RoughnessMap, sampler_RoughnessMap, IN.uv).r * _RoughnessIntensity;
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+                
+                half4 baseColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv) * _BaseColor;
+                half noise = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, input.uv).r;
+                half roughness = SAMPLE_TEXTURE2D(_RoughnessMap, sampler_RoughnessMap, input.uv).r * _RoughnessIntensity;
                 
                 half dissolveAlpha = noise - _DissolveThreshold;
                 clip(dissolveAlpha);
                 
-                // 计算边缘发光
                 half edgeLerp = saturate(dissolveAlpha / _DissolveEdgeWidth);
                 half4 surfaceColor = lerp(_DissolveEdgeColor, baseColor, edgeLerp);
                 
-                // 发光强度计算
-                half emissionMask = 1 - edgeLerp;  // 边缘遮罩
+                half emissionMask = 1 - edgeLerp;
                 half3 emission = _EdgeEmissionColor.rgb * pow(emissionMask, _EdgeEmissionPower);
                 
-                float3 normalWS = normalize(IN.normalWS);
-                float3 positionWS = IN.positionWS;
+                float3 normalWS = normalize(input.normalWS);
+                float3 positionWS = input.positionWS;
                 float3 viewDirWS = normalize(GetWorldSpaceViewDir(positionWS));
                 
                 float3 ambient = unity_AmbientSky.rgb * _AmbientIntensity;
@@ -148,7 +165,7 @@ Shader "Lit/ScoreDisolveShader"
                 inputData.bakedGI = ambient;
                 
                 #ifdef LIGHTMAP_ON
-                    inputData.bakedGI = SampleLightmap(IN.lightmapUV, normalWS);
+                    inputData.bakedGI = SampleLightmap(input.lightmapUV, normalWS);
                 #endif
                 
                 SurfaceData surfaceData = (SurfaceData)0;
@@ -157,19 +174,17 @@ Shader "Lit/ScoreDisolveShader"
                 surfaceData.smoothness = _Smoothness * (1 - roughness);
                 surfaceData.normalTS = float3(0, 0, 1);
                 surfaceData.occlusion = 1;
-                // 将发光效果添加到emission中
                 surfaceData.emission = roughnessAdjustedSpecular * mainLight.color + emission;
                 surfaceData.alpha = surfaceColor.a;
                 
                 half4 finalColor = UniversalFragmentPBR(inputData, surfaceData);
-                finalColor.rgb = MixFog(finalColor.rgb, IN.fogCoord);
+                finalColor.rgb = MixFog(finalColor.rgb, input.fogCoord);
                 
                 return finalColor;
             }
             ENDHLSL
         }
         
-        // ShadowCaster Pass保持不变...
         Pass
         {
             Name "ShadowCaster"
@@ -182,6 +197,11 @@ Shader "Lit/ScoreDisolveShader"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            
+            #pragma multi_compile_instancing
+            #pragma multi_compile _ DOTS_INSTANCING_ON
+            #pragma multi_compile _ STEREO_INSTANCING_ON
+            #pragma multi_compile _ UNITY_SINGLE_PASS_STEREO STEREO_MULTIVIEW_ON
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -191,12 +211,15 @@ Shader "Lit/ScoreDisolveShader"
                 float4 positionOS : POSITION;
                 float3 normalOS : NORMAL;
                 float2 texcoord : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             float3 _LightDirection;
@@ -211,7 +234,12 @@ Shader "Lit/ScoreDisolveShader"
 
             Varyings vert(Attributes input)
             {
-                Varyings output;
+                Varyings output = (Varyings)0;
+                
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_TRANSFER_INSTANCE_ID(input, output);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+                
                 float3 positionWS = TransformObjectToWorld(input.positionOS.xyz);
                 float3 normalWS = TransformObjectToWorldNormal(input.normalOS);
                 float4 positionCS = TransformWorldToHClip(ApplyShadowBias(positionWS, normalWS, _LightDirection));
@@ -223,6 +251,9 @@ Shader "Lit/ScoreDisolveShader"
 
             half4 frag(Varyings input) : SV_TARGET
             {
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+                
                 half noise = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, input.uv).r;
                 clip(noise - _DissolveThreshold);
                 return 0;
