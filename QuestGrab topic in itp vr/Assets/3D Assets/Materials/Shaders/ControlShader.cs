@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class ContrilShader : MonoBehaviour
 {
-    public float dissolveSpeed = 2f; // 溶解速度控制
+    public float dissolveSpeed = 2f;
     private List<DissolveEffect> dissolveEffects = new List<DissolveEffect>();
+    private bool isDissolving = false; // 添加标志位防止重复触发
 
     void Start()
     {
         MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer renderer in renderers)
         {
-            DissolveEffect dissolve = renderer.gameObject.AddComponent<DissolveEffect>();
-            dissolve.Init("ScoreDis");
-            dissolveEffects.Add(dissolve);
+            // 确保每个物体只添加一次DissolveEffect组件
+            DissolveEffect existingDissolve = renderer.gameObject.GetComponent<DissolveEffect>();
+            if (existingDissolve == null)
+            {
+                DissolveEffect dissolve = renderer.gameObject.AddComponent<DissolveEffect>();
+                dissolve.Init("ScoreDis");
+                dissolveEffects.Add(dissolve);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HandDetect"))
+        if (other.CompareTag("HandDetect") && !isDissolving)
         {
+            isDissolving = true; // 设置标志位
             foreach (var dissolve in dissolveEffects)
             {
-                dissolve.StartDissolve(dissolveSpeed);
+                if (dissolve != null) // 确保组件还存在
+                {
+                    dissolve.StartDissolve(dissolveSpeed);
+                }
             }
         }
     }
@@ -35,6 +45,7 @@ public class DissolveEffect : MonoBehaviour
     private MeshRenderer meshRenderer;
     private Material instancedMaterial;
     private Coroutine dissolveCoroutine;
+    private bool hasStartedDissolve = false; // 添加标志位防止重复触发
 
     public void Init(string materialName)
     {
@@ -54,6 +65,9 @@ public class DissolveEffect : MonoBehaviour
 
     public void StartDissolve(float speed)
     {
+        if (hasStartedDissolve) return; // 如果已经开始溶解，直接返回
+        hasStartedDissolve = true;
+
         if (dissolveCoroutine != null)
             StopCoroutine(dissolveCoroutine);
         dissolveCoroutine = StartCoroutine(DissolveRoutine(speed));
@@ -68,8 +82,7 @@ public class DissolveEffect : MonoBehaviour
             instancedMaterial.SetFloat("_DissolveThreshold", Mathf.Clamp01(dissolveAmount));
             yield return null;
         }
-
-        Destroy(gameObject); // 溶解完成后销毁游戏物体
+        Destroy(gameObject);
     }
 
     void OnDestroy()
