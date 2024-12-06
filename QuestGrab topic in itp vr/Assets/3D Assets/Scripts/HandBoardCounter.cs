@@ -6,12 +6,14 @@ using TMPro;
 
 public class HandBoardCounter : MonoBehaviour
 {
+
     private int score = 0;
     public Text YourScore;
    // public TextMeshProUGUI endScore;
     public bool touchBoard = false ;
     //public AudioClip win;
     private AudioSource winSource;
+    public bool canAddedScore = false;
 
     private void Start()
     {
@@ -19,23 +21,23 @@ public class HandBoardCounter : MonoBehaviour
     }
 
     private void Update() {
-        if(touchBoard)
-        {
-          //  Invoke("invokeObject",0.5f);
-        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "BoardArea")
-        {
+        if(canAddedScore) {
+            Debug.Log("getcanaddscore");
+          if (other.gameObject.tag == "BoardArea")
+          {
             Destroy(other.gameObject);
             touchBoard = true ;
              score += 1;
             YourScore.text = score.ToString();
           //  endScore.text = score.ToString();
             winSource.Play();
-            Debug.Log("audioShouldPlay");
-
+          //  Debug.Log("audioShouldPlay");
+                canAddedScore = false ;
+           }
         }
     }
     

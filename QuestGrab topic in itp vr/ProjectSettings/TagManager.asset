@@ -8,6 +8,8 @@ TagManager:
   - HandArea
   - Anchor
   - HandDetect
+  - FingerTarget
+  - HandCounter
   layers:
   - Default
   - TransparentFX
