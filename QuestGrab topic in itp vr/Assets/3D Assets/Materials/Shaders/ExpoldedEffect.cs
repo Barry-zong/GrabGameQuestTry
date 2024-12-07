@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ExpoldedEffect : MonoBehaviour
 {
+    public HeartUIcountControl heartUIcountControl;
     [Header("触发设置")]
     public bool triggerExplosion = false;
     public bool processChildrenSequentially = false;
@@ -50,6 +51,7 @@ public class ExpoldedEffect : MonoBehaviour
         public Vector3 initialPosition;
         public Vector3 initialVelocity;  // 初始速度
         public Vector3 currentVelocity;  // 当前速度
+        
     }
 
     void Start()
@@ -63,6 +65,7 @@ public class ExpoldedEffect : MonoBehaviour
     {
         if (triggerExplosion && !hasExploded)
         {
+            heartUIcountControl.IncreaseLife();
             CollectChildMeshes();
             triggerExplosion = false;
             hasExploded = true;

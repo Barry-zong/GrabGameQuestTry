@@ -33,9 +33,9 @@ public class CountFingerTargets : MonoBehaviour
 
         // 计算总数并输出
         int totalCount = targets.Length + siblingTargets.Length;
-        Debug.Log($"找到 FingerTarget 标签的物体总数: {totalCount}");
-        Debug.Log($"- 子级物体中的数量: {targets.Length}");
-        Debug.Log($"- 同级物体中的数量: {siblingTargets.Length}");
+      //  Debug.Log($"找到 FingerTarget 标签的物体总数: {totalCount}");
+      //  Debug.Log($"- 子级物体中的数量: {targets.Length}");
+      //  Debug.Log($"- 同级物体中的数量: {siblingTargets.Length}");
         if( totalCount > 0 )
         {
             valueBig = true;
