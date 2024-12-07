@@ -20,7 +20,7 @@ public class HeartUIcountControl : MonoBehaviour
     {
         // 初始化最大生命值和当前生命值
         maxLife = targetMaterials.Length;
-        currentLife = maxLife;
+        currentLife = maxLife-1 ;
 
         // 初始化所有材质的溶解值为0
         foreach (var material in targetMaterials)
