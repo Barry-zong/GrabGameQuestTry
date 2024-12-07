@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ExpoldedEffect : MonoBehaviour
 {
-
     [Header("触发设置")]
     public bool triggerExplosion = false;
     public bool processChildrenSequentially = false;
@@ -48,6 +47,9 @@ public class ExpoldedEffect : MonoBehaviour
         public Vector3 noiseOffset;
         public float rotationSpeed;
         public float pathOffset;
+        public Vector3 initialPosition;
+        public Vector3 initialVelocity;  // 初始速度
+        public Vector3 currentVelocity;  // 当前速度
     }
 
     void Start()
@@ -101,20 +103,31 @@ public class ExpoldedEffect : MonoBehaviour
         for (int i = particles.Count - 1; i >= 0; i--)
         {
             ParticleInfo info = particles[i];
-            if (info.particle == null) continue;
+            if (info.particle == null)
+            {
+                particles.RemoveAt(i);
+                continue;
+            }
 
             float elapsed = Time.time - info.startTime;
             float t = elapsed / fadeOutTime;
 
             if (t >= 1f)
             {
+                if (info.trail != null)
+                {
+                    info.trail.time = 0;
+                }
                 Destroy(info.particle);
                 particles.RemoveAt(i);
                 continue;
             }
 
+            // 更新速度（添加重力影响）
+            info.currentVelocity += Physics.gravity * Time.deltaTime * 0.3f; // 减小重力影响
+
             // 更新位置
-            info.particle.transform.position = CalculateParticlePosition(info);
+            info.particle.transform.position = CalculateParticlePosition(info, Time.deltaTime);
 
             // 更新旋转
             info.particle.transform.Rotate(Vector3.up * info.rotationSpeed * Time.deltaTime);
@@ -123,7 +136,7 @@ public class ExpoldedEffect : MonoBehaviour
             if (info.originalMaterial != null)
             {
                 Color newColor = info.originalColor;
-                newColor.a = Mathf.Lerp(1f, 0f, Mathf.Pow(t, 0.5f));
+                newColor.a = Mathf.Lerp(1f, 0f, Mathf.SmoothStep(0f, 1f, t));
                 info.particle.GetComponent<MeshRenderer>().material.color = newColor;
             }
 
@@ -131,45 +144,37 @@ public class ExpoldedEffect : MonoBehaviour
             if (info.trail != null)
             {
                 info.trail.time = Mathf.Lerp(trailTime, 0f, t);
+                info.trail.startWidth = Mathf.Lerp(trailWidth, 0f, t);
             }
         }
     }
 
-    private Vector3 CalculateParticlePosition(ParticleInfo info)
+    private Vector3 CalculateParticlePosition(ParticleInfo info, float deltaTime)
     {
         float timeSinceStart = Time.time - info.startTime;
-        Vector3 originalPos = info.particle.transform.position;
 
-        // 基础向上运动
-        float height = upwardSpeed * timeSinceStart;
+        // 计算基础运动
+        Vector3 position = info.particle.transform.position;
 
-        // 使用多个正弦波创造复杂的波动
-        float xWave = Mathf.Sin(timeSinceStart * waveFrequency + info.pathOffset) * waveMagnitude;
-        float zWave = Mathf.Cos(timeSinceStart * waveFrequency + info.pathOffset) * waveMagnitude;
+        // 应用当前速度
+        position += info.currentVelocity * deltaTime;
 
         // 添加螺旋运动
-        float spiralAngle = timeSinceStart * info.rotationSpeed;
-        float spiralX = Mathf.Sin(spiralAngle) * spiralForce;
-        float spiralZ = Mathf.Cos(spiralAngle) * spiralForce;
-
-        // 使用柏林噪声添加随机性
-        float noise1 = Mathf.PerlinNoise(
-            timeSinceStart * noiseScale + info.noiseOffset.x,
-            info.noiseOffset.y
-        ) * 2f - 1f;
-        float noise2 = Mathf.PerlinNoise(
-            info.noiseOffset.z,
-            timeSinceStart * noiseScale + info.noiseOffset.x
-        ) * 2f - 1f;
-
-        // 组合所有运动
-        Vector3 offset = new Vector3(
-            xWave + spiralX + noise1 * randomness,
-            height,
-            zWave + spiralZ + noise2 * randomness
+        float spiralAngle = timeSinceStart * waveFrequency;
+        Vector3 spiralMotion = new Vector3(
+            Mathf.Cos(spiralAngle) * spiralForce,
+            0,
+            Mathf.Sin(spiralAngle) * spiralForce
         );
 
-        return originalPos + offset * Time.deltaTime;
+        // 添加随机偏移
+        Vector3 randomOffset = new Vector3(
+            Mathf.PerlinNoise(timeSinceStart + info.noiseOffset.x, 0) - 0.5f,
+            Mathf.PerlinNoise(0, timeSinceStart + info.noiseOffset.y) - 0.5f,
+            Mathf.PerlinNoise(timeSinceStart + info.noiseOffset.z, 0) - 0.5f
+        ) * randomness;
+
+        return position + (spiralMotion + randomOffset) * deltaTime;
     }
 
     private void CollectChildMeshes()
@@ -215,6 +220,14 @@ public class ExpoldedEffect : MonoBehaviour
 
             Vector3 worldVertex = meshFilter.transform.TransformPoint(vertex);
             GameObject particle = CreateParticle(worldVertex);
+
+            // 计算爆炸方向（从中心向外）
+            Vector3 explosionDir = (worldVertex - meshFilter.transform.position).normalized;
+
+            // 创建初始速度（上升 + 向外扩散）
+            Vector3 initialVelocity = (Vector3.up * upwardSpeed + explosionDir * Random.Range(1f, 2f))
+                                    * Random.Range(0.8f, 1.2f);
+
             ParticleInfo info = new ParticleInfo
             {
                 particle = particle,
@@ -224,7 +237,10 @@ public class ExpoldedEffect : MonoBehaviour
                 baseOffset = Random.insideUnitSphere,
                 noiseOffset = Random.insideUnitSphere * 1000f,
                 rotationSpeed = Random.Range(-180f, 180f),
-                pathOffset = Random.Range(0f, Mathf.PI * 2f)
+                pathOffset = Random.Range(0f, Mathf.PI * 2f),
+                initialPosition = worldVertex,
+                initialVelocity = initialVelocity,
+                currentVelocity = initialVelocity
             };
 
             if (enableTrail)

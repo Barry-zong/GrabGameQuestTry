@@ -14,6 +14,7 @@ public class HandBoardCounter : MonoBehaviour
     //public AudioClip win;
     private AudioSource winSource;
     public bool canAddedScore = false;
+    public FireworkSpawner fireworkSpawner;
 
     private void Start()
     {
@@ -26,11 +27,12 @@ public class HandBoardCounter : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(canAddedScore) {
-            Debug.Log("getcanaddscore");
+           // Debug.Log("getcanaddscore");
           if (other.gameObject.tag == "BoardArea")
           {
             Destroy(other.gameObject);
             touchBoard = true ;
+                fireworkSpawner.fire = true;
              score += 1;
             YourScore.text = score.ToString();
           //  endScore.text = score.ToString();

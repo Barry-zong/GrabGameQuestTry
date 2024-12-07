@@ -355,7 +355,7 @@ MonoBehaviour:
   processChildrenSequentially: 0
   delayBetweenChildren: 0.5
   particleScale: 0.02
-  particleMaterial: {fileID: 2100000, guid: 94eebd9d324eddd49be6e843f56d7ec0, type: 2}
+  particleMaterial: {fileID: 2100000, guid: dfd0705d4beb17f429cae72b2bddc28f, type: 2}
   subdivisions: 15
   fadeOutTime: 3
   upwardSpeed: 3
@@ -574,11 +574,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3383927062418142791, guid: ad951bfaf2abbf54cb09cbd67c0863d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.917
+      value: 0.857
       objectReference: {fileID: 0}
     - target: {fileID: 3383927062418142791, guid: ad951bfaf2abbf54cb09cbd67c0863d0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.95
+      value: 0.866
       objectReference: {fileID: 0}
     - target: {fileID: 3383927062418142791, guid: ad951bfaf2abbf54cb09cbd67c0863d0, type: 3}
       propertyPath: m_LocalPosition.z
