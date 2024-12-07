@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ExpoldedEffect : MonoBehaviour
 {
-    public HeartUIcountControl heartUIcountControl;
+     BridgeHeal bridgeHeal;
     [Header("¥•∑¢…Ë÷√")]
     public bool triggerExplosion = false;
     public bool processChildrenSequentially = false;
@@ -60,12 +60,18 @@ public class ExpoldedEffect : MonoBehaviour
         pendingMeshes = new Queue<MeshFilter>();
         InitializeTrailColor();
     }
-
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.CompareTag("Anchor"))
+          {
+            bridgeHeal = collision.GetComponent<BridgeHeal>();
+        }
+    }
     void Update()
     {
         if (triggerExplosion && !hasExploded)
         {
-            heartUIcountControl.IncreaseLife();
+            bridgeHeal.HealAddLife();
             CollectChildMeshes();
             triggerExplosion = false;
             hasExploded = true;

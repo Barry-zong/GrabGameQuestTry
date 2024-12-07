@@ -82,9 +82,10 @@ public class HeartUIcountControl : MonoBehaviour
     // 增加生命值
     public void IncreaseLife()
     {
-        controller.TriggerHealState();
+        
         if (currentLife < maxLife)
         {
+            controller.TriggerHealState();
             currentLife++;
         }
     }
