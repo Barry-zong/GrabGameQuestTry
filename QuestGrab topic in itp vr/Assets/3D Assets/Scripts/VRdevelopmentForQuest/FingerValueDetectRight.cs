@@ -23,31 +23,31 @@ public class FingerValueDetectRight : MonoBehaviour
         OVRSkeleton skeleton = hand.GetComponent<OVRSkeleton>();
 
         // 拇指
-        fingerBends[0] = CalculateThumbBend(skeleton)*350;
+        fingerBends[0] = CalculateThumbBend(skeleton)*360;
 
         // 食指
         fingerBends[1] = CalculateFingerBend(skeleton,
             OVRSkeleton.BoneId.Hand_Index1,
             OVRSkeleton.BoneId.Hand_Index2,
-            OVRSkeleton.BoneId.Hand_Index3)*250;
+            OVRSkeleton.BoneId.Hand_Index3)*300;
 
         // 中指
         fingerBends[2] = CalculateFingerBend(skeleton,
             OVRSkeleton.BoneId.Hand_Middle1,
             OVRSkeleton.BoneId.Hand_Middle2,
-            OVRSkeleton.BoneId.Hand_Middle3)*230;
+            OVRSkeleton.BoneId.Hand_Middle3)*260;
 
         // 无名指
         fingerBends[3] = CalculateFingerBend(skeleton,
             OVRSkeleton.BoneId.Hand_Ring1,
             OVRSkeleton.BoneId.Hand_Ring2,
-            OVRSkeleton.BoneId.Hand_Ring3)*250;
+            OVRSkeleton.BoneId.Hand_Ring3)*300;
 
         // 小指
         fingerBends[4] = CalculateFingerBend(skeleton,
             OVRSkeleton.BoneId.Hand_Pinky1,
             OVRSkeleton.BoneId.Hand_Pinky2,
-            OVRSkeleton.BoneId.Hand_Pinky3)*220;
+            OVRSkeleton.BoneId.Hand_Pinky3)*250;
     }
 
     float CalculateFingerBend(OVRSkeleton skeleton, OVRSkeleton.BoneId proximal, OVRSkeleton.BoneId intermediate, OVRSkeleton.BoneId distal)

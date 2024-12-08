@@ -8,7 +8,7 @@ public class HeartUIcountControl : MonoBehaviour
     [SerializeField] private Material[] targetMaterials;
     [SerializeField] private float dissolveSpeed = 1f;
     public VignetteStateController controller;
-
+    public LevelGenerator levelGenerator;
     private int maxLife;
     public int currentLife;
 
@@ -37,6 +37,10 @@ public class HeartUIcountControl : MonoBehaviour
     {
         // 确保currentLife在有效范围内
         currentLife = Mathf.Clamp(currentLife, 0, maxLife);
+        if (currentLife<=0 ) {
+            Debug.Log("dieeeee");
+            levelGenerator.DieNoHeartRemain();
+        }
 
         // 更新每个材质的溶解状态
         for (int i = 0; i < targetMaterials.Length; i++)

@@ -7,7 +7,9 @@ public class BridgeforHandCounter : MonoBehaviour
     public bool canSendValueAdd = false ;
     // Start is called before the first frame update
     public HandBoardCounter handBoardCounter ;
-
+    public EndUIconScene1 endUIconScene ;
+    public LevelGenerator levelGenerator ;
+    public StartScene1AudioPlay startSceneaudio ;
     // Update is called once per frame
     void Update()
     {
@@ -15,6 +17,15 @@ public class BridgeforHandCounter : MonoBehaviour
         {
             handBoardCounter.canAddedScore = true;
             canSendValueAdd = false;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Finish"))
+        {
+            endUIconScene.levelEnding = true;
+            levelGenerator.timeOver = true;
+            startSceneaudio.mainBackgroundMusicPlay = false;
         }
     }
 }

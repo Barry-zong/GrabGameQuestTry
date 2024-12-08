@@ -8,6 +8,7 @@ public class HandBoardCounter : MonoBehaviour
 {
 
     private int score = 0;
+    public LevelGenerator levelGenerator;
     public Text YourScore;
    // public TextMeshProUGUI endScore;
     public bool touchBoard = false ;
@@ -22,7 +23,7 @@ public class HandBoardCounter : MonoBehaviour
     }
 
     private void Update() {
-        
+        levelGenerator.currentScore = score;
     }
     private void OnTriggerEnter(Collider other)
     {
