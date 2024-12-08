@@ -46,6 +46,7 @@ public class LevelGenerator : MonoBehaviour
     private int totalSpawnedCount = 0;
     private GameObject lastSpawnedObject;
     private bool hasSpawnedLastObj = false;
+    private bool isOKspeed = false;
     private float timer = 0f;
     private bool isTimerRunning = false;
     public bool startGenGame = false;
@@ -56,24 +57,79 @@ public class LevelGenerator : MonoBehaviour
     public int currentScore = 0;
     private float calcuteDexterity = 0f;
     public EndUIconScene1 endUIconScene1;
-
+    public float counter = 0f;
+    public HandGestureManager leftHandCalculator;
     private Vector3[] lastPositions; // 新增：存储暂停时的位置
-
+    private bool isOKGesture = false;
+    public float maxSpeed = 0.1f;
+    public float increaseSpeed = 0.05f;  // 每秒增加的速度
+    private bool startSpeed = true;
     private void Start()
     {
         openGameOnce = true;
         lastPositions = new Vector3[0];
     }
+    void okSpeedUp()
+    {
 
+        if (leftHandCalculator != null)
+        {
+           
+           // Debug.Log("innnn");
+            float thumbBend = leftHandCalculator.leftFingerBends[0];
+            float indexBend = leftHandCalculator.leftFingerBends[1];
+            float middleBend = leftHandCalculator.leftFingerBends[2];
+            float ringBend = leftHandCalculator.leftFingerBends[3];
+            float pinkyBend = leftHandCalculator.leftFingerBends[4];
+            // OK手势的条件：
+            // 拇指和食指弯曲度大于0.7（表示捏合）
+            // 其他手指弯曲度小于0.3（表示伸展）
+            //   Debug.Log("Fingers: " + thumbBend + ", " + indexBend + ", " + middleBend + ", " + ringBend + ", " + pinkyBend);
+            isOKGesture = (thumbBend > 0.7f && indexBend > 0.6f) &&
+                          (middleBend > 0.6f && ringBend > 0.1f && pinkyBend >= 0f);
+            // 根据手势状态更新计数器
+            if (isOKGesture)
+            {
+                if(startSpeed)
+                {
+                    counter = 1f;
+                    startSpeed = false;
+                }
+                
+                counter += Time.deltaTime * increaseSpeed;
+               // Debug.Log("uppppppp");
+               
+                
+                if (counter > maxSpeed)
+                {
+                    counter = maxSpeed;
+                   
+                }
+            }
+            else
+            {
+                counter = 0f;
+                startSpeed = true;
+            }
+
+        }
+    }
     void Update()
     {
+       
+        if (isOKspeed)
+        {
+            okSpeedUp();
+        }
+       
         if (startGenGame && openGameOnce)
         {
+            isOKspeed = true;
             GenerateInitialObjects();
             startScene1AudioPlay.mainBackgroundMusicPlay = true;
             openGameOnce = false;
         }
-
+        float newSpeed = levelMoveSpeed + counter;
         // 只在非暂停状态下执行游戏逻辑
         if (startGenGame && !isPaused)
         {
@@ -83,7 +139,7 @@ public class LevelGenerator : MonoBehaviour
                 if (spawnedObjects[i] != null)
                 {
                     Vector3 moveDirection = transform.TransformDirection(Vector3.right);
-                    spawnedObjects[i].transform.Translate(moveDirection * levelMoveSpeed * Time.deltaTime, Space.World);
+                    spawnedObjects[i].transform.Translate(moveDirection * newSpeed * Time.deltaTime, Space.World);
                 }
             }
 
