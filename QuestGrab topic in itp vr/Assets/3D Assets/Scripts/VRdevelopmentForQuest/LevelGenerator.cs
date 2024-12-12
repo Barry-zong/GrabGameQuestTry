@@ -156,7 +156,11 @@ public class LevelGenerator : MonoBehaviour
         // 这些UI更新应该在暂停检查之外，确保UI始终更新
         if (isPaused || timeOver)
         {
-            calcuteDexterity = CalculateDexterity(timer, currentScore);
+            calcuteDexterity = CalculateDexterity(timer, currentScore)*2;
+            if(calcuteDexterity>=100)
+            {
+                calcuteDexterity = 100;
+            }
         }
 
         UpdateTimer();
